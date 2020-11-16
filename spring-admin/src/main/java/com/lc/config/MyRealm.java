@@ -1,7 +1,7 @@
 //package com.lc.config;
 //
 //import com.lc.mapper.SysUserMapper;
-//import com.lc.pojo.SysUsers;
+//import com.lc.pojo.SysUsersDeptVo;
 //import org.apache.shiro.authc.*;
 //import org.apache.shiro.authz.AuthorizationInfo;
 //import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -50,7 +50,7 @@
 //    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 //        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
 //        String username = usernamePasswordToken.getUsername();
-//        SysUsers user = sysUserMapper.findByName(username);
+//        SysUsersDeptVo user = sysUserMapper.findByName(username);
 //        //如果password_salt 盐字段有值还需将盐加入AuthenticationInfo构造器
 //        AuthenticationInfo info =
 //                new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());

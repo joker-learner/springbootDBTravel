@@ -19,4 +19,6 @@ public interface SysDeptsMapper {
     int saveDeptObject(Depts deptsObject);
 
     int updateDeptObject(Depts deptsObject);
+
+    Depts findById(Long id);
 }

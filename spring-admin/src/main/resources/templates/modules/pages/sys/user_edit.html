@@ -173,7 +173,7 @@
 	 return params;
  }
  function doLoadRoles(){
-	 var url="role/doFindRoles"
+	 var url="/role/doFindRoles"
 	 $.getJSON(url,function(result){
 		 if(result.state==1){
 		  doInitPageRoles(result.data);

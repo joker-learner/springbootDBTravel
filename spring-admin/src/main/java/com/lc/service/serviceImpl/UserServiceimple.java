@@ -2,7 +2,7 @@ package com.lc.service.serviceImpl;
 
 import com.lc.mapper.SysUserMapper;
 import com.lc.pojo.PageObject;
-import com.lc.pojo.SysUsers;
+import com.lc.pojo.SysUsersDeptVo;
 import com.lc.service.UserService;
 import com.lc.utils.ServiceException;
 import org.apache.shiro.SecurityUtils;
@@ -36,12 +36,12 @@ public class UserServiceimple implements UserService {
     }
 
     @Override
-    public PageObject<SysUsers> findPageObject(String username, Integer pageCurrent) {
+    public PageObject<SysUsersDeptVo> findPageObject(String username, Integer pageCurrent) {
         if (pageCurrent == null || pageCurrent < 1) {
             throw new IllegalArgumentException("当前页码不正确");
         }
 
-        PageObject<SysUsers> pageObject = new PageObject<>();
+        PageObject<SysUsersDeptVo> pageObject = new PageObject<>();
         Integer rowCount = sysUserMapper.findRowCount(username);
         if (rowCount == 0)
             throw new ServiceException("系统没有查到对应记录");
@@ -49,7 +49,7 @@ public class UserServiceimple implements UserService {
         Integer pageSize = 5;
         Integer pageCount = (rowCount - 1) / pageSize + 1;
         Integer startIndex = (pageCurrent - 1) * 5;
-        List<SysUsers> usersList = sysUserMapper.findPageObject(username, startIndex, pageSize);
+        List<SysUsersDeptVo> usersList = sysUserMapper.findPageObject(username, startIndex, pageSize);
 
         pageObject.setPageCount(pageCount);              //一共多少页
         pageObject.setPageCurrent(pageCurrent);     //当前页

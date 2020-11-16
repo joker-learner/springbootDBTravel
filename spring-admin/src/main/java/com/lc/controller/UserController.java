@@ -2,11 +2,10 @@ package com.lc.controller;
 
 import com.lc.pojo.JsonResult;
 import com.lc.pojo.PageObject;
-import com.lc.pojo.SysUsers;
+import com.lc.pojo.SysUsersDeptVo;
 import com.lc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +27,7 @@ public class UserController {
     @RequestMapping("/doFindPageObjects")
     @ResponseBody     //PageObjects   包含数据 和 分页信息
     public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
-        PageObject<SysUsers> pageObject = userServiceimple.findPageObject(username, pageCurrent);
+        PageObject<SysUsersDeptVo> pageObject = userServiceimple.findPageObject(username, pageCurrent);
         return new JsonResult(pageObject);
     }
 }

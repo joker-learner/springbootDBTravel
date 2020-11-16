@@ -1,7 +1,6 @@
 package com.lc.mapper;
 
-import com.lc.pojo.LogEntity;
-import com.lc.pojo.SysUsers;
+import com.lc.pojo.SysUsersDeptVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,10 +14,10 @@ public interface SysUserMapper {
     //跟据usernmae 找权限名
     Set<String> findPermissionByName(String name);
 
-    SysUsers findByName(String name);
+    SysUsersDeptVo findByName(String name);
 
     int findRowCount(@Param("username") String username);
 
-    List<SysUsers> findPageObject(@Param("username")String username ,
-                                   @Param("startIndex")Integer startIndex , @Param("pageSize")Integer pageSize);
+    List<SysUsersDeptVo> findPageObject(@Param("username")String username ,
+                                        @Param("startIndex")Integer startIndex , @Param("pageSize")Integer pageSize);
 }

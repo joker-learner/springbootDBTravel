@@ -77,6 +77,7 @@
 		   doFindObjectById(id,title);
 	   }
    }
+
    function doFindObjectById(id,title){
 	   //1.params
 	   var params={"id":id};
@@ -187,7 +188,8 @@
 	   console.log(row);
 	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	     "<td>"+row.username+"</td>"+
-	     "<td>"+(row.sysDept?row.sysDept.name:'未分配')+"</td>"+
+	     "<td>"+(row.depts?row.depts.name:'未分配')+"</td>"+
+		 // "<td>"+(row.sysDept?row.sysDept.name:'未分配')+"</td>"+
 	     "<td>"+row.email+"</td>"+
 	     "<td>"+row.mobile+"</td>"+
 	     "<td>"+(row.valid?"启用":"禁用")+"</td>"+

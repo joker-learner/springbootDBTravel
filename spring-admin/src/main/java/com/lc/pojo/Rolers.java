@@ -5,22 +5,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class SysUsers {
+public class Rolers {
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String password;
-
-    private String salt;
-
-    private String email;
-
-    private String mobile;
-
-    private int valid;
-
-    private int deptId;
+    private String note;
 
     private Date createdTime;
 
@@ -29,5 +19,4 @@ public class SysUsers {
     private String createdUser;
 
     private String modifiedUser;
-
 }

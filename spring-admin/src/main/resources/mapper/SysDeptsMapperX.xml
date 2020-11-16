@@ -33,5 +33,9 @@
          select id,name,parentId
          from sys_depts
     </select>
+    <select id="findById" resultType="com.lc.pojo.Depts">
+        select * from sys_depts
+        where  id = #{id}
+    </select>
 
 </mapper>
