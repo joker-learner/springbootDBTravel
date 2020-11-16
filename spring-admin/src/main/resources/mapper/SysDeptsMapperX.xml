@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.mapper.SysDeptsMapper">
+    <insert id="saveDeptObject" parameterType="com.lc.pojo.Depts">
+        insert into sys_depts (name,parentId,sort,note,createdTime,modifiedTime,createdUser,modifiedUser)
+                       values (#{name},#{parentId},#{sort},#{note},now(),now(),#{createdUser},#{modifiedUser});
+
+    </insert>
+    <update id="updateDeptObject" parameterType="com.lc.pojo.Depts">
+        update sys_depts
+        set
+            name = #{name},
+            parentId = #{parentId},
+            sort = #{sort},
+            note = #{note},
+            modifiedTime = now(),
+            modifiedUser = #{modifiedUser}
+        where id = #{id}
+    </update>
+    <delete id="deleteDepById">
+        delete from sys_depts
+        where id = #{id}
+    </delete>
+    <select id="findAllObject" resultType="java.util.Map">
+
+            select t1.* , (select name from sys_depts as t2
+                            where t1.parentId = t2.id) as parentName
+            from sys_depts as t1
+    </select>
+    <select id="findZtreeDepe" resultType="com.lc.pojo.Node">
+         select id,name,parentId
+         from sys_depts
+    </select>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.mapper.MenuMapper">
+    <insert id="insertObject">
+        insert into sys_menus
+        (name,url,type,sort,note,parentId,permission,
+createdTime,modifiedTime,createdUser,modifiedUser)
+          values
+          (#{name},#{url},#{type},#{sort},#{note},#{parentId},
+#{permission},now(),now(),#{createdUser},#{modifiedUser})
+
+    </insert>
+    <update id="updateMenuEntity" parameterType="com.lc.pojo.SysMenus">
+        update sys_menus
+         set
+           name=#{name},
+           type=#{type},
+           sort=#{sort},
+           url=#{url},
+           parentId=#{parentId},
+           permission=#{permission},
+           modifiedUser=#{modifiedUser},
+           modifiedTime=now()
+        where id=#{id}
+    </update>
+    <delete id="doDeleteById">
+          delete from sys_menus
+          where id=#{id}
+    </delete>
+
+    <select id="checkIfHaschild" resultType="java.lang.Integer">
+            select count(*)
+            from sys_menus
+            where parentId=#{id}
+    </select>
+
+
+    <select id="findZtreeMenuNodes" resultType="com.lc.pojo.Node">
+            select id,name,parentId
+            from sys_menus
+    </select>
+
+    <select id="findObjects" resultType="java.util.Map">
+                    select c.*,(
+                    select p.name
+                    from sys_menus as p
+                    where c.parentId=p.id
+                    ) as parentName
+            from sys_menus as c
+    </select>
+</mapper>

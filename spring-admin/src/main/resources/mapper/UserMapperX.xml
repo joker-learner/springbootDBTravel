@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.mapper.SysUserMapper">
+    <select id="findRoleByName" resultSets="Set" resultType="String">
+        SELECT t3.name from sys_users as t1
+        INNER JOIN sys_user_roles as t2
+        on t1.id = t2.user_id
+        INNER JOIN sys_roles as t3
+        on t2.role_id = t3.id
+        where t1.username = #{username};
+    </select>
+
+    <select id="findPermissionByName" resultSets="Set" resultType="String">
+        SELECT t5.permission from sys_users as t1
+        inner JOIN sys_user_roles as t2
+        on t1.id = t2.user_id
+        INNER JOIN sys_roles as t3
+        on t2.role_id = t3.id
+        INNER JOIN sys_role_menus t4
+        on t3.id = t4.role_id
+        INNER JOIN sys_menus as t5
+        on t4.menu_id = t5.id
+        WHERE t1.username = #{username};
+    </select>
+
+    <select id="findByName" resultType="com.lc.pojo.SysUsers">
+        select * from sys_users
+        where username = #{username}
+    </select>
+    <select id="findRowCount" resultType="java.lang.Integer">
+        select count(*) from sys_users
+        <where>
+            <if test="username != null and username !=''">
+                username like concat("%",#{username},"%")
+            </if>
+        </where>
+    </select>
+    <select id="findPageObject" resultType="com.lc.pojo.SysUsers">
+        select * from sys_users
+        <where>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
+        </where>
+        order by createdTime desc
+        limit #{startIndex}, #{pageSize}
+
+    </select>
+
+</mapper>
