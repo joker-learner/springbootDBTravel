@@ -3,7 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lc.mapper.RoleMenuDao">
+    <insert id="insertMenuRole">
+        insert into sys_role_menus (role_id , menu_id) values 
+        <foreach collection="menuIds" item="menuId" separator=",">
+            #{role_id} , #{menuId}
+        </foreach>
 
+    </insert>
 
     <delete id="deleteRoleMenueById">
          delete from sys_role_menus

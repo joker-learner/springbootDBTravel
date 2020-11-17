@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface SysDeptsMapper {
+public interface SysDeptsDao {
 
     List<Map<String, Object>> findAllObject();
 

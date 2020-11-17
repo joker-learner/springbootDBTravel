@@ -1,6 +1,7 @@
 package com.lc.controller;
 
 import com.lc.mapper.RoleMenuDao;
+import com.lc.mapper.RoleUserDao;
 import com.lc.pojo.JsonResult;
 import com.lc.pojo.PageObject;
 import com.lc.pojo.Rolers;
@@ -16,9 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RolersController {
     @Autowired
     private RolesService rolesService;
-
-    @Autowired
-    private RoleMenuDao roleMenuDao;
 
     @RequestMapping("/doFindPageObjects")
     @ResponseBody
@@ -49,7 +47,12 @@ public class RolersController {
     public JsonResult saveRoleObject(Rolers rolers, Integer... menuIds) {
         //插入角色
         int i = rolesService.insertRoleObject(rolers , menuIds);
-
         return new JsonResult("save is ok");
+    }
+
+    @RequestMapping("/doUpdateObject")
+    @ResponseBody
+    public JsonResult doUpdateRoleObject(Rolers rolers, Integer... menuIds){
+        return new JsonResult("update is ok");
     }
 }

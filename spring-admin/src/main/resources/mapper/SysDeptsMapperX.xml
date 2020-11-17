@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lc.mapper.SysDeptsMapper">
+<mapper namespace="com.lc.mapper.SysDeptsDao">
     <insert id="saveDeptObject" parameterType="com.lc.pojo.Depts">
         insert into sys_depts (name,parentId,sort,note,createdTime,modifiedTime,createdUser,modifiedUser)
                        values (#{name},#{parentId},#{sort},#{note},now(),now(),#{createdUser},#{modifiedUser});

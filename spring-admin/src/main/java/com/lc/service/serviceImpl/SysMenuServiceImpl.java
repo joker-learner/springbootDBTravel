@@ -1,7 +1,7 @@
 package com.lc.service.serviceImpl;
 
 import com.alibaba.druid.util.StringUtils;
-import com.lc.mapper.MenuMapper;
+import com.lc.mapper.MenuDao;
 import com.lc.mapper.RoleMenuDao;
 import com.lc.pojo.Node;
 import com.lc.pojo.SysMenus;
@@ -17,14 +17,14 @@ import java.util.Map;
 public class SysMenuServiceImpl implements SysMenuService {
     //菜单本身操作
     @Autowired
-    private MenuMapper menuMapper;
+    private MenuDao menuDao;
     //菜单相关联的role操作
     @Autowired
     private RoleMenuDao roleMenuDao;
 
     @Override//查emnu表全部
     public List<Map<String, Object>> findObjects() {
-        List<Map<String, Object>> menusList = menuMapper.findObjects();
+        List<Map<String, Object>> menusList = menuDao.findObjects();
         if (menusList.size() == 0) {
             throw new ServiceException("菜单表为空...");
         }
@@ -37,13 +37,13 @@ public class SysMenuServiceImpl implements SysMenuService {
         if (id == null || id <= 0)
             throw new IllegalArgumentException("请先选择");
         //2.基于id进行子元素查询
-        int count = menuMapper.checkIfHaschild(id);
+        int count = menuDao.checkIfHaschild(id);
         if (count > 0)
             throw new ServiceException("请先删除子菜单");
         //3.删除角色,菜单关系数据
         roleMenuDao.deleteRoleMenueById(id);
         //4.删除菜单元素
-        int rows = menuMapper.doDeleteById(id);
+        int rows = menuDao.doDeleteById(id);
         if (rows == 0)
             throw new ServiceException("此菜单可能已经不存在");
         //5.返回结果
@@ -57,7 +57,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         if (StringUtils.isEmpty(entity.getName()))
             throw new IllegalArgumentException("菜单名不能为空");
         //2.保存数据
-        int rows = menuMapper.insertObject(entity);
+        int rows = menuDao.insertObject(entity);
         //3.返回数据
         return rows;
     }
@@ -70,7 +70,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         if (StringUtils.isEmpty(entiy.getName())) {
             throw new ServiceException("菜单名不能为空");
         }
-        int i = menuMapper.updateMenuEntity(entiy);
+        int i = menuDao.updateMenuEntity(entiy);
         if (i == 0) {
             throw new ServiceException("数据已存在");
         }
@@ -79,6 +79,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public List<Node> findZtreeMenuNodes() {
-        return menuMapper.findZtreeMenuNodes();
+        return menuDao.findZtreeMenuNodes();
     }
 }

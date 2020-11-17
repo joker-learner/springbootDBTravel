@@ -1,8 +1,7 @@
 package com.lc.service.serviceImpl;
 
-import com.lc.mapper.SysDeptsMapper;
+import com.lc.mapper.SysDeptsDao;
 import com.lc.pojo.Depts;
-import com.lc.pojo.JsonResult;
 import com.lc.pojo.Node;
 import com.lc.service.DeptService;
 import com.lc.utils.ServiceException;
@@ -16,11 +15,11 @@ import java.util.Map;
 public class DeptServiceImpl implements DeptService {
 
     @Autowired
-    private SysDeptsMapper sysDeptsMapper;
+    private SysDeptsDao sysDeptsDao;
 
     @Override
     public List<Map<String, Object>> findAllObject() {
-        List<Map<String, Object>> deptList = sysDeptsMapper.findAllObject();
+        List<Map<String, Object>> deptList = sysDeptsDao.findAllObject();
         if (deptList == null) {
             throw new ServiceException("查无此记录。。");
         } else {
@@ -33,20 +32,20 @@ public class DeptServiceImpl implements DeptService {
         if (id == 0 || id == null) {
             throw new ServiceException("未选取id");
         }
-        int i = sysDeptsMapper.deleteDepById(id);
+        int i = sysDeptsDao.deleteDepById(id);
         return i;
     }
 
     @Override
     public List<Node> findZTreeDept() {
-        List<Node> list = sysDeptsMapper.findZtreeDepe();
+        List<Node> list = sysDeptsDao.findZtreeDepe();
         return list;
     }
 
     @Override
     public int saveDepeObject(Depts deptsObject) {
         if (deptsObject != null) {
-            int i = sysDeptsMapper.saveDeptObject(deptsObject);
+            int i = sysDeptsDao.saveDeptObject(deptsObject);
             return 1;
         } else {
             throw new ServiceException("待保存的对象不能为空");
@@ -56,7 +55,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public int updateDeptObject(Depts deptsObject) {
         if (deptsObject != null) {
-            int i = sysDeptsMapper.updateDeptObject(deptsObject);
+            int i = sysDeptsDao.updateDeptObject(deptsObject);
         } else {
             throw new ServiceException("待更新的对象不能为空..");
         }

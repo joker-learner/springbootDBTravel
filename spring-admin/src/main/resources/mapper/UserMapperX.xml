@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lc.mapper.UserMapper">
+<mapper namespace="com.lc.mapper.UserDao">
     <select id="findRoleByName" resultSets="Set" resultType="String">
         SELECT t3.name from sys_users as t1
         INNER JOIN sys_user_roles as t2
@@ -40,7 +40,7 @@
 
     <resultMap id="sysUserDeptVo" type="com.lc.pojo.SysUsersDeptVo">
         <association property="depts" column="deptId"
-                     select="com.lc.mapper.SysDeptsMapper.findById"></association>
+                     select="com.lc.mapper.SysDeptsDao.findById"></association>
     </resultMap>
     <select id="findPageObject" resultMap="sysUserDeptVo">
         select * from sys_users

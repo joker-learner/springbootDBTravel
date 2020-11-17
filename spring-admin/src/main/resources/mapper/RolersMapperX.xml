@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lc.mapper.RolersMapper">
+<mapper namespace="com.lc.mapper.RolersDao">
     <insert id="insertRoleObject">
         insert into sys_roles (name , note ,modifiedTime,modifiedUser)
                        values (#{name} , #{note},now() , null);
