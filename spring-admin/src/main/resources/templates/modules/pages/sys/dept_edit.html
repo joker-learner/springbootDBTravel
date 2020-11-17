@@ -101,7 +101,7 @@
     }
 
     function doCancel() {
-        $("#mainContentId").load("dept/dept_list", function () {
+        $("#mainContentId").load("/dept/dept_list", function () {
             $("#mainContentId").removeData();
             $("#parentId").removeData();
         })
@@ -144,10 +144,10 @@
     //确定按钮
     function doSetSelectNode() {
         //1.获取选中的节点对象
-        var nodes = zTree.getSelectedNodes();
+        let nodes = zTree.getSelectedNodes();
         if (nodes.length == 0)
             return;
-        var node = nodes[0];
+        let node = nodes[0];
         console.log(node);
         //2.将对象中内容,填充到表单
         $("#parentId").data("parentId", node.id);

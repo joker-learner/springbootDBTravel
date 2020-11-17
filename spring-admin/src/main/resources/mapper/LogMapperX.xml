@@ -11,25 +11,23 @@
     </insert>
     <delete id="deleteLogByIds" parameterType="List">
         delete from sys_logs
-        <foreach collection="ids"
-                 open="("
-                 close=")"
-                 separator=","
-                 item="id">
-            #{id}
+        where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+             #{id}
+--              取得是foreach里的id
         </foreach>
     </delete>
-
 
     <select id="getRowCount" resultType="java.lang.Integer">
         select count(*) from sys_logs
         <where>
-        <if test="username!=null and username!=''">
-            username like concat("%",#{username},"%")
-        </if>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
         </where>
 
     </select>
+
     <select id="findPageObject" resultType="com.lc.pojo.LogEntity">
         select * from sys_logs
         <where>

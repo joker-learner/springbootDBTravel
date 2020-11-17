@@ -40,7 +40,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public List<Node> findZTreeDept() {
         List<Node> list = sysDeptsMapper.findZtreeDepe();
-        return null;
+        return list;
     }
 
     @Override
