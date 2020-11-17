@@ -61,5 +61,11 @@ public class PageController {
     public String toRoleList(){
         return "/modules/pages/sys/role_list";
     }
+
+    @RequestMapping("/role/role_edit")
+    public String toRoleEditList(){
+        return "/modules/pages/sys/role_edit";
+    }
+
 }
 

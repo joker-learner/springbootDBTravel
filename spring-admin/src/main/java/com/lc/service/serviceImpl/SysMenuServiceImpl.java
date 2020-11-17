@@ -2,7 +2,7 @@ package com.lc.service.serviceImpl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.lc.mapper.MenuMapper;
-import com.lc.mapper.SysRoleMenuDao;
+import com.lc.mapper.RoleMenuDao;
 import com.lc.pojo.Node;
 import com.lc.pojo.SysMenus;
 import com.lc.service.SysMenuService;
@@ -20,7 +20,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     private MenuMapper menuMapper;
     //菜单相关联的role操作
     @Autowired
-    private SysRoleMenuDao sysRoleMenuDao;
+    private RoleMenuDao roleMenuDao;
 
     @Override//查emnu表全部
     public List<Map<String, Object>> findObjects() {
@@ -41,7 +41,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         if (count > 0)
             throw new ServiceException("请先删除子菜单");
         //3.删除角色,菜单关系数据
-        sysRoleMenuDao.deleteRoleMenueById(id);
+        roleMenuDao.deleteRoleMenueById(id);
         //4.删除菜单元素
         int rows = menuMapper.doDeleteById(id);
         if (rows == 0)

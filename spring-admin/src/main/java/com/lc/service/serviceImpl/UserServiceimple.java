@@ -1,6 +1,6 @@
 package com.lc.service.serviceImpl;
 
-import com.lc.mapper.SysUserMapper;
+import com.lc.mapper.UserMapper;
 import com.lc.pojo.PageObject;
 import com.lc.pojo.SysUsersDeptVo;
 import com.lc.service.UserService;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserServiceimple implements UserService {
 
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private UserMapper userMapper;
 
 //    @Autowired
 
@@ -42,14 +42,14 @@ public class UserServiceimple implements UserService {
         }
 
         PageObject<SysUsersDeptVo> pageObject = new PageObject<>();
-        Integer rowCount = sysUserMapper.findRowCount(username);
+        Integer rowCount = userMapper.findRowCount(username);
         if (rowCount == 0)
             throw new ServiceException("系统没有查到对应记录");
 
         Integer pageSize = 5;
         Integer pageCount = (rowCount - 1) / pageSize + 1;
         Integer startIndex = (pageCurrent - 1) * 5;
-        List<SysUsersDeptVo> usersList = sysUserMapper.findPageObject(username, startIndex, pageSize);
+        List<SysUsersDeptVo> usersList = userMapper.findPageObject(username, startIndex, pageSize);
 
         pageObject.setPageCount(pageCount);              //一共多少页
         pageObject.setPageCurrent(pageCurrent);     //当前页

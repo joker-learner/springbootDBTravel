@@ -7,5 +7,10 @@ public interface RolesService {
 
     PageObject<Rolers> findPageObj(String name, Integer pageCurrent);
 
+    int deleteObjectById(Long id);
+
+    Rolers findObjectById(Long id);
+
+    int insertRoleObject(Rolers rolers , Integer... menu_id);
 
 }

@@ -1,6 +1,6 @@
 //package com.lc.config;
 //
-//import com.lc.mapper.SysUserMapper;
+//import com.lc.mapper.UserMapper;
 //import com.lc.pojo.SysUsersDeptVo;
 //import org.apache.shiro.authc.*;
 //import org.apache.shiro.authz.AuthorizationInfo;
@@ -21,7 +21,7 @@
 //public class MyRealm extends AuthorizingRealm {
 //
 //    @Resource
-//    private SysUserMapper sysUserMapper;
+//    private UserMapper sysUserMapper;
 //    /**
 //     * @param principalCollection
 //     * @return 获取授权数据

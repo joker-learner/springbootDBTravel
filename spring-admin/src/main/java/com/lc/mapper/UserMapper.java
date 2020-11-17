@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Mapper
-public interface SysUserMapper {
+public interface UserMapper {
     //跟据username 找 角色名
     Set<String>  findRoleByName(String username);
     //跟据usernmae 找权限名
