@@ -1,23 +1,33 @@
 package com.lc.service.serviceImpl;
 
+import com.lc.mapper.RoleUserDao;
 import com.lc.mapper.UserDao;
 import com.lc.pojo.PageObject;
+import com.lc.pojo.SysUser;
 import com.lc.pojo.SysUsersDeptVo;
 import com.lc.service.UserService;
 import com.lc.utils.ServiceException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserServiceimple implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleUserDao roleUserDao;
 
 //    @Autowired
 
@@ -30,7 +40,7 @@ public class UserServiceimple implements UserService {
             subject.login(token);
             System.out.println("登录成功。。");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
             throw new ServiceException("登录失败，密码或账号错误");
         }
     }
@@ -50,13 +60,112 @@ public class UserServiceimple implements UserService {
         Integer pageCount = (rowCount - 1) / pageSize + 1;
         Integer startIndex = (pageCurrent - 1) * 5;
         List<SysUsersDeptVo> usersList = userDao.findPageObject(username, startIndex, pageSize);
-
         pageObject.setPageCount(pageCount);              //一共多少页
         pageObject.setPageCurrent(pageCurrent);     //当前页
         pageObject.setRecords(usersList);           //查出来的数据
         pageObject.setRowCount(rowCount);               //记录条数
         pageObject.setPageSize(pageSize);
-
         return pageObject;
+    }
+
+    @Override
+    public int saveObject(SysUser entity, Integer[] roleIds) {
+        long start = System.currentTimeMillis();
+//        log.info("start:" + start);
+        //1.参数校验
+        if (entity == null)
+            throw new IllegalArgumentException("保存对象不能为空");
+        if (StringUtils.isEmpty(entity.getUsername()))
+            throw new IllegalArgumentException("用户名不能为空");
+        if (StringUtils.isEmpty(entity.getPassword()))
+            throw new IllegalArgumentException("密码不能为空");
+        if (roleIds == null || roleIds.length == 0)
+            throw new IllegalArgumentException("至少要为用户分配角色");
+
+        //2.保存用户自身信息
+        //2.1对密码进行加密
+        String sourcePwd = entity.getPassword();
+        String salt = UUID.randomUUID().toString();
+        SimpleHash sh = new SimpleHash(//Shiro框架
+                "MD5",//algorithmName 算法
+                sourcePwd,//原密码
+                salt, //盐值
+                1);//hashIterations表示加密次数
+        entity.setSalt(salt);
+        entity.setPassword(sh.toHex());
+        int rows = userDao.insertObject(entity);
+
+        //3.保存用户角色关系数据
+        roleUserDao.insertObjects(entity.getId(), roleIds);
+        long end = System.currentTimeMillis();
+//        log.info("end:" + end);
+//        log.info("total time :" + (end - start));
+        //4.返回结果
+        return rows;
+    }
+
+    @Override
+    public Map<String, Object> findObjectById(Integer userId) {
+        if (userId == null || userId <= 0)
+            throw new IllegalArgumentException("参数数据不合法,userId=" + userId);
+        //2.业务查询
+        SysUsersDeptVo user = userDao.findObjectById(userId);
+        if (user == null)
+            throw new ServiceException("此用户已经不存在");
+        List<Integer> roleIds = roleUserDao.findRoleIdsByUserId(userId);
+        //3.数据封装
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("roleIds", roleIds);
+        return map;
+    }
+
+    @Override
+    public int updateObject(SysUser entity, Integer[] roleIds) {
+        if (entity == null)
+            throw new IllegalArgumentException("保存对象不能为空");
+
+        if (StringUtils.isEmpty(entity.getUsername()))
+            throw new IllegalArgumentException("用户名不能为空");
+
+        if (roleIds == null || roleIds.length == 0)
+            throw new IllegalArgumentException("必须为其指定角色");
+
+        //其它验证自己实现，例如用户名已经存在，密码长度，...
+        //2.更新用户自身信息
+        int rows = userDao.updateObject(entity);
+
+        //3.保存用户与角色关系数据
+        roleUserDao.deleteObjectsByUserId(entity.getId());
+
+        roleUserDao.insertObjects(entity.getId(), roleIds);
+
+        //4.返回结果
+        return rows;
+    }
+
+    @Override
+    public int validById(Integer id, Integer valid) {
+        if (id == null || id <= 0)
+            throw new ServiceException("参数不合法,id=" + id);
+
+        if (valid == null || (valid != 1 && valid != 0))
+
+            throw new ServiceException("参数不合法,valid=" + valid);
+
+        //2.执行禁用或启用操作(admin为后续登陆用户）
+        int rows = userDao.validById(id, valid, "admin");
+
+        //3.判定结果,并返回
+        if (rows == 0)
+            throw new ServiceException("此记录可能已经不存在");
+        return rows;
+    }
+
+    @Override
+    public int upudatePwd(String pwd, String newPwd, String cfgPwd) {
+        //1、先判断改密码与数据库中密码相同不
+        //2、
+        return 0;
     }
 }

@@ -13,7 +13,8 @@ public interface LogServiceDao {
     int getRowCount(@Param("username") String username);
 
     List<LogEntity> findPageObject(@Param("username")String username ,
-                                   @Param("startIndex")Integer startIndex , @Param("pageSize")int pageSize);
+                                   @Param("startIndex")Integer startIndex ,
+                                   @Param("pageSize")Integer pageSize);
 
     int deleteLogByIds(@Param("ids") Integer... ids);  //@Param对应前端的数据
 

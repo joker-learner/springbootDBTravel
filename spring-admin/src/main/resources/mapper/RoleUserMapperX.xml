@@ -3,10 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lc.mapper.RoleUserDao">
+    <insert id="insertObjects">
+        insert into sys_user_roles
+        (user_id,role_id)
+        values
+        <foreach collection="roleIds" separator="," item="roleId">
+        (#{userId},#{roleId})
+        </foreach>
+    </insert>
 
     <delete id="deleteRoleUserByRoleId">
         delete from sys_user_roles
         where role_id = #{roleId}
     </delete>
+
+    <delete id="deleteObjectsByUserId">
+         delete from sys_user_roles
+         where user_id=#{userId}
+    </delete>
+
+    <select id="findRoleIdsByUserId" resultType="java.lang.Integer">
+        select role_id
+        from sys_user_roles
+        where user_id=#{id}
+    </select>
 
 </mapper>

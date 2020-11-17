@@ -3,10 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lc.mapper.RolersDao">
-    <insert id="insertRoleObject">
-        insert into sys_roles (name , note ,modifiedTime,modifiedUser)
-                       values (#{name} , #{note},now() , null);
+<!--    useGeneratedKeys表示要使用写入到数据库的自增主键值-->
+    <insert id="insertRoleObject" parameterType="com.lc.pojo.Rolers"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_roles
+
+         (id,name,note,createdTime,modifiedTime,createdUser,modifiedUser)
+         values
+         (null,#{name},#{note},now(),now(),#{createdUser},#{modifiedUser})
     </insert>
+
+    <update id="updateRoleObject">
+        update sys_roles
+        set
+            name = #{name},
+            note = #{note},
+            modifiedTime = now(),
+            modifiedUser = "admin"
+        where id = #{id}
+    </update>
+
     <delete id="delteObjectById">
             delete from sys_roles
             where id = #{id}
@@ -26,9 +42,23 @@
         order by createdUser desc
         limit #{startIndex} , #{pageSize}
     </select>
-    <select id="findObjectById" resultType="com.lc.pojo.Rolers">
-        select * from sys_roles
+
+    <resultMap id="sysRoleMenuVo" type="com.lc.pojo.SysRoleMenuVo">
+        <id property="id" column="id"/>
+        <!-- collection一般应用于one2many查询 -->
+        <collection property="menuIds"
+                    select="com.lc.mapper.RoleMenuDao.findMenuIdsByRoleId"
+                    column="id">
+        </collection>
+    </resultMap>
+    <select id="findObjectById" resultMap="sysRoleMenuVo">
+        select id, name ,note
+        from sys_roles
         where id = #{id}
+    </select>
+    <select id="findObjects" resultType="com.lc.common.CheckBox">
+         select id,name
+         from sys_roles
     </select>
 
 

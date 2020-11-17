@@ -67,5 +67,10 @@ public class PageController {
         return "/modules/pages/sys/role_edit";
     }
 
+
+    @RequestMapping("/user/pwd_edit")
+    public String toPassEdit(){
+        return "/modules/pages/sys/pwd_edit";
+    }
 }
 

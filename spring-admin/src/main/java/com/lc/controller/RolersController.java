@@ -5,6 +5,7 @@ import com.lc.mapper.RoleUserDao;
 import com.lc.pojo.JsonResult;
 import com.lc.pojo.PageObject;
 import com.lc.pojo.Rolers;
+import com.lc.pojo.SysRoleMenuVo;
 import com.lc.service.RolesService;
 import com.lc.utils.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +39,28 @@ public class RolersController {
         if (id == null || id == 0) {
             throw new ServiceException("没有传过来正确待查找id");
         }
-        Rolers roles = rolesService.findObjectById(id);
-        return new JsonResult(roles);
+        SysRoleMenuVo roleMenuVo = rolesService.findObjectById(id);
+        return new JsonResult(roleMenuVo);
     }
 
     @RequestMapping("/doSaveObject")
     @ResponseBody
     public JsonResult saveRoleObject(Rolers rolers, Integer... menuIds) {
-        //插入角色
-        int i = rolesService.insertRoleObject(rolers , menuIds);
+        //插入 角色
+        int i = rolesService.insertRoleObject(rolers, menuIds);
         return new JsonResult("save is ok");
     }
 
     @RequestMapping("/doUpdateObject")
     @ResponseBody
-    public JsonResult doUpdateRoleObject(Rolers rolers, Integer... menuIds){
+    public JsonResult doUpdateRoleObject(Rolers rolers, Integer... menuIds) {
+        int i = rolesService.updatRoleObject(rolers, menuIds);
         return new JsonResult("update is ok");
+    }
+
+    @RequestMapping("/doFindRoles")
+    @ResponseBody
+    public JsonResult doFindRoles(){
+        return new JsonResult(rolesService.findObjects());
     }
 }

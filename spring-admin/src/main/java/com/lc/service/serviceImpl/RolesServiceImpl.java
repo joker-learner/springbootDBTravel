@@ -1,14 +1,17 @@
 package com.lc.service.serviceImpl;
 
+import com.lc.common.CheckBox;
 import com.lc.mapper.RoleUserDao;
 import com.lc.mapper.RolersDao;
 import com.lc.mapper.RoleMenuDao;
 import com.lc.pojo.PageObject;
 import com.lc.pojo.Rolers;
+import com.lc.pojo.SysRoleMenuVo;
 import com.lc.service.RolesService;
 import com.lc.utils.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,18 +53,41 @@ public class RolesServiceImpl implements RolesService {
         return i;
     }
 
+    @Transactional
     @Override
-    public Rolers findObjectById(Long id) {
-        Rolers rolers = rolersDao.findObjectById(id);
-        return rolers;
+    public int insertRoleObject(Rolers rolers, Integer... menuIds) {
+        int i = rolersDao.insertRoleObject(rolers);
+        //给角色授权
+        int j = roleMenuDao.insertMenuRole(rolers.getId(), menuIds);
+        return i;
     }
 
     @Override
-    public int insertRoleObject(Rolers rolers, Integer... menu_id) {
-        int i = rolersDao.insertRoleObject(rolers);
-
-        //给角色授权
-        roleMenuDao.insertMenuRole(rolers.getId(), menu_id);
+    public int updatRoleObject(Rolers rolers, Integer... menuIds) {
+        if (rolers == null) {
+            throw new ServiceException("传入角色为空..");
+        }
+        int i = rolersDao.updateRoleObject(rolers);
+//        int j = roleMenuDao.updateRoleMenuObject(rolers, menuIds);
+        roleMenuDao.deleteRoleMenueByRoleId(rolers.getId());
+        roleMenuDao.insertMenuRole(rolers.getId() , menuIds);
         return i;
+    }
+
+    @Override
+    public SysRoleMenuVo findObjectById(Long id) {
+        if(id==null||id<=0)
+            throw new IllegalArgumentException("id的值不合法");
+        //2.执行查询
+        SysRoleMenuVo result=rolersDao.findObjectById(id);
+        //3.验证结果并返回
+        if(result==null)
+            throw new ServiceException("此记录已经不存在");
+        return result;
+    }
+
+    @Override
+    public List<CheckBox> findObjects() {
+        return rolersDao.findObjects();
     }
 }

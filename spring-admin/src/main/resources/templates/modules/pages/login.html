@@ -55,6 +55,9 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
+          <button type="button" class="btn btn-primary btn-block btn-flat btn-rigist">Regist up</button>
+        </div>
+        <div class="col-xs-4">
           <button type="button" class="btn btn-primary btn-block btn-flat btn-login">Sign In</button>
         </div>
         <!-- /.col -->
@@ -79,28 +82,34 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
-    $(".btn").click(doLogin);
+    $(".btn-login").click(doLogin);
+    // $(".btn").click(doLogin);
+    $(".btn-rigist").click(doRegist);
   });
   function doLogin(){
-	 
-	  var params={
+	  let params={
 		 username:$("#usernameId").val(),
 		 password:$("#passwordId").val(),
 		 isRememberMe:$("#rememberId").prop("checked"),
 	  }
-	  var url="user/doLogin";
+	  let url="/user/doLogin";
 	  console.log("params",params);
 	  $.post(url,params,function(result){
 		  console.log("login.result",result);
 		  if(result.state==1){
 			//跳转到indexUI对应的页面
-			location.href="doIndexUI?t="+Math.random();
+			location.href="/doIndexUI?t="+Math.random();
 		  }else{
 			$(".login-box-msg").html(result.message); 
 		  }
 		  return false;//防止刷新时重复提交
 	  });
   }
+  function doRegist() {
+      let url = "/user/rigister";
+      location.href = url;
+  }
+
 </script>
 </body>
 </html>

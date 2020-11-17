@@ -1,7 +1,8 @@
 package com.lc.mapper;
 
+import com.lc.common.CheckBox;
 import com.lc.pojo.Rolers;
-import com.lc.service.RolesService;
+import com.lc.pojo.SysRoleMenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public interface RolersDao {
 
     int delteObjectById(Long id);
 
-    Rolers findObjectById(Long id);
+    SysRoleMenuVo findObjectById(Long id);
 
     int insertRoleObject(Rolers rolers);
+
+    int updateRoleObject(Rolers rolers);
+
+    List<CheckBox> findObjects();
 }

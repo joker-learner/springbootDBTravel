@@ -1,5 +1,6 @@
 package com.lc.mapper;
 
+import com.lc.pojo.SysUser;
 import com.lc.pojo.SysUsersDeptVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,16 @@ public interface UserDao {
 
     List<SysUsersDeptVo> findPageObject(@Param("username")String username ,
                                         @Param("startIndex")Integer startIndex , @Param("pageSize")Integer pageSize);
+
+    int insertObject(SysUser entity);
+
+    SysUsersDeptVo findObjectById(Integer userId);
+
+    int updateObject(SysUser entity);
+
+    int validById(@Param("id")Integer id,
+                  @Param("valid")Integer valid,
+                  @Param("modifiedUser")String modifiedUser);
+
+
 }

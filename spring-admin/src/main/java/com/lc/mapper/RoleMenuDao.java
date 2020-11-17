@@ -14,4 +14,6 @@ public interface RoleMenuDao {
     //当删除一条角色时，需要删除其相关的menu   在sys_role_menus
     int deleteRoleMenueByRoleId(Long role_id);
 
+    Long findMenuIdsByRoleId(Long roleId);
+
 }
