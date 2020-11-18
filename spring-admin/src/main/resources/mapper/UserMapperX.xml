@@ -13,6 +13,7 @@
       (#{username},#{password},#{deptId},#{email},#{mobile},#{salt},#{valid},
        now(),now(),#{createdUser},#{modifiedUser})
     </insert>
+
     <update id="updateObject">
          update sys_users
          set username=#{username},
@@ -24,6 +25,7 @@
          where id=#{id}
 
     </update>
+
     <update id="validById">
         update sys_users
         set
@@ -72,6 +74,7 @@
         <association property="depts" column="deptId"
                      select="com.lc.mapper.SysDeptsDao.findById"></association>
     </resultMap>
+
     <select id="findPageObject" resultMap="sysUserDeptVo">
         select * from sys_users
         <where>
@@ -82,6 +85,7 @@
         order by createdTime desc
         limit #{startIndex}, #{pageSize}
     </select>
+
     <select id="findObjectById" resultType="com.lc.pojo.SysUsersDeptVo">
          select *
          from sys_users

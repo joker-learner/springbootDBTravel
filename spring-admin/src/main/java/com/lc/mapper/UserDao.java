@@ -20,7 +20,8 @@ public interface UserDao {
     int findRowCount(@Param("username") String username);
 
     List<SysUsersDeptVo> findPageObject(@Param("username")String username ,
-                                        @Param("startIndex")Integer startIndex , @Param("pageSize")Integer pageSize);
+                                        @Param("startIndex")Integer startIndex ,
+                                        @Param("pageSize")Integer pageSize);
 
     int insertObject(SysUser entity);
 

@@ -9,7 +9,6 @@ import java.util.Map;
 public interface UserService {
     //登录验证
     void login(String username, String pass);
-
     //注册
     PageObject<SysUsersDeptVo> findPageObject(String username, Integer pageCurrent);
 

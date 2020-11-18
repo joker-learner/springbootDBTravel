@@ -7,7 +7,6 @@
     <insert id="insertRoleObject" parameterType="com.lc.pojo.Rolers"
             useGeneratedKeys="true" keyProperty="id">
         insert into sys_roles
-
          (id,name,note,createdTime,modifiedTime,createdUser,modifiedUser)
          values
          (null,#{name},#{note},now(),now(),#{createdUser},#{modifiedUser})
