@@ -1,11 +1,13 @@
 package com.lc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
 public class SysUsersDeptVo {
+
     private Long id;
 
     private String username;
@@ -24,8 +26,10 @@ public class SysUsersDeptVo {
 
     private Depts depts;
 
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm" ,timezone = "GMT+8")
     private Date createdTime;
 
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm" ,timezone = "GMT+8")
     private Date modifiedTime;
 
     private String createdUser;

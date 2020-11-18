@@ -1,5 +1,7 @@
 package com.lc.service.serviceImpl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lc.mapper.RoleUserDao;
 import com.lc.mapper.UserDao;
 import com.lc.pojo.PageObject;
@@ -67,6 +69,20 @@ public class UserServiceimple implements UserService {
         pageObject.setPageSize(pageSize);
         return pageObject;
     }
+//    @Override
+//    public PageObject<SysUsersDeptVo> findPageObject(String username, Integer pageCurrent){
+//        if (pageCurrent == null || pageCurrent <1){
+//            throw new IllegalArgumentException("页码不合法");
+//        }
+//        int pageSize = 3;
+//        /**
+//         * PageHelper 分页
+//         */
+//        Page<SysUsersDeptVo> page = PageHelper.startPage(pageCurrent, pageSize);
+//        List<SysUsersDeptVo> records = userDao.findPageObjectByPageHelper(username);
+//        System.out.println("总页数" + page.getPageNum());
+//        return new PageObject<SysUsersDeptVo>((int)page.getTotal(), records, page.getPageNum(), pageSize, pageCurrent);
+//    }//总记录数                         //总页数
 
     @Override
     public int saveObject(SysUser entity, Integer[] roleIds) {
@@ -164,8 +180,8 @@ public class UserServiceimple implements UserService {
 
     @Override
     public int upudatePwd(String pwd, String newPwd, String cfgPwd) {
-        //1、先判断改密码与数据库中密码相同不
-        //2、
+        //1、先判断改密码与数据库中密码相同不（md5+salt 加密后与数据库密码对比）
+        //2、对输入的密码
         return 0;
     }
 }

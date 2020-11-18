@@ -23,6 +23,9 @@ public interface UserDao {
                                         @Param("startIndex")Integer startIndex ,
                                         @Param("pageSize")Integer pageSize);
 
+
+    List<SysUsersDeptVo> findPageObjectByPageHelper(@Param("username")String username);
+
     int insertObject(SysUser entity);
 
     SysUsersDeptVo findObjectById(Integer userId);
@@ -32,6 +35,5 @@ public interface UserDao {
     int validById(@Param("id")Integer id,
                   @Param("valid")Integer valid,
                   @Param("modifiedUser")String modifiedUser);
-
 
 }

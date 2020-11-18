@@ -71,8 +71,10 @@
     </select>
 
     <resultMap id="sysUserDeptVo" type="com.lc.pojo.SysUsersDeptVo">
+
         <association property="depts" column="deptId"
                      select="com.lc.mapper.SysDeptsDao.findById"></association>
+
     </resultMap>
 
     <select id="findPageObject" resultMap="sysUserDeptVo">
@@ -91,5 +93,22 @@
          from sys_users
          where id=#{id}
     </select>
+
+    <resultMap id="SysDeptMap" type="com.lc.pojo.SysUsersDeptVo">
+        <association property="depts" column="deptId"
+                     select="com.lc.mapper.SysDeptsDao.findById">
+        </association>
+    </resultMap>
+
+    <select id="findPageObjectByPageHelper" resultMap="SysDeptMap">
+        select * from sys_users
+        <where>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
+        </where>
+        order by createdTime desc
+    </select>
+
 
 </mapper>

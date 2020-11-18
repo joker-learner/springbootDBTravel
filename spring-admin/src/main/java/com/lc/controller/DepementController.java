@@ -4,7 +4,6 @@ import com.lc.pojo.Depts;
 import com.lc.pojo.JsonResult;
 import com.lc.pojo.Node;
 import com.lc.service.DeptService;
-import com.lc.utils.ServiceException;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

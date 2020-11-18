@@ -31,7 +31,8 @@ public class UserController {
     @RequestMapping("/doFindPageObjects")
     @ResponseBody     //PageObjects   包含数据 和 分页信息
     public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
-        PageObject<SysUsersDeptVo> pageObject = userServiceimple.findPageObject(username, pageCurrent);
+        PageObject<SysUsersDeptVo> pageObject = userServiceimple
+                .findPageObject(username, pageCurrent);
         return new JsonResult(pageObject);
     }
 

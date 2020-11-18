@@ -44,6 +44,8 @@
 
     <resultMap id="sysRoleMenuVo" type="com.lc.pojo.SysRoleMenuVo">
         <id property="id" column="id"/>
+        <result property="name" column="name"></result>
+        <result property="note" column="note"></result>
         <!-- collection一般应用于one2many查询 -->
         <collection property="menuIds"
                     select="com.lc.mapper.RoleMenuDao.findMenuIdsByRoleId"
@@ -55,6 +57,7 @@
         from sys_roles
         where id = #{id}
     </select>
+
     <select id="findObjects" resultType="com.lc.common.CheckBox">
          select id,name
          from sys_roles
