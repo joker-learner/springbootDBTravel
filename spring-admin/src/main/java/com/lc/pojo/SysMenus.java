@@ -2,11 +2,13 @@ package com.lc.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class SysMenus {
+public class SysMenus implements Serializable {
 
+    private static final long serialVersionUID = 4381618129954123379L;
     //菜单ID
     private Long id;
     //菜单名称

@@ -2,6 +2,8 @@ package com.lc.config;//package com.lc.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -21,10 +23,13 @@ import java.util.Map;
 @Configuration
 public class ShireConfi {
 
+    @Bean
+    public CacheManager getCacheManager() {
+        return new MemoryConstrainedCacheManager();
+    }
 
     @Bean
     public MyRealm myRealm() {
-
         return new MyRealm();
     }
 
@@ -73,23 +78,23 @@ public class ShireConfi {
         return webSessionManager;
     }
 
-//    @Bean
-//    public CookieRememberMeManager getCookieRememberMeManager() {
-//        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-//        SimpleCookie simpleCookie = new SimpleCookie();
-//        simpleCookie.setMaxAge(30 * 24 * 60 * 60);
-//        cookieRememberMeManager.setCookie(simpleCookie);
-//        return cookieRememberMeManager;
-//    }
+    @Bean
+    public CookieRememberMeManager getCookieRememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        SimpleCookie simpleCookie = new SimpleCookie("joker_learenr");
+        simpleCookie.setMaxAge(7*24*60*60);
+        cookieRememberMeManager.setCookie(simpleCookie);
+        return cookieRememberMeManager;
+    }
 
     @Bean  //JdbcRealm jdbcRealm
-    public DefaultWebSecurityManager defaultSecurityManager(MyRealm myRealm) {
+    public DefaultWebSecurityManager defaultSecurityManager(MyRealm myRealm, CacheManager cacheManager) {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
-//        defaultSecurityManager.setCacheManager(ehCacheManager);
+        defaultSecurityManager.setCacheManager(cacheManager);
 //        defaultSecurityManager.setRealm(jdbcRealm);
         defaultSecurityManager.setRealm(myRealm);
         defaultSecurityManager.setSessionManager(getDefaultWebSessionManager());
-//        defaultSecurityManager.setRememberMeManager(getCookieRememberMeManager());
+        defaultSecurityManager.setRememberMeManager(getCookieRememberMeManager());
         return defaultSecurityManager;
     }
 
@@ -108,12 +113,12 @@ public class ShireConfi {
         filterMap.put("*.js", "anon");
         filterMap.put("*.css", "anon");
         filterMap.put("*.css.map", "anon");
-        filterMap.put("*.png","anon");
-        filterMap.put("/templates/**", "anon");
-        filterMap.put("/bower_components/*","anon");
-        filterMap.put("/build/*","anon");
-        filterMap.put("/dist/*","anon");
-        filterMap.put("/plugins/*","anon");
+        filterMap.put("*.png", "anon");
+//        filterMap.put("/templates/**", "anon");
+        filterMap.put("/bower_components/**", "anon");
+        filterMap.put("/build/**", "anon");
+        filterMap.put("/dist/**", "anon");
+        filterMap.put("/plugins/**", "anon");
         //放行请求
 //        filterMap.put("/dept/**","authc");
 //        filterMap.put("/login", "anon");
@@ -125,20 +130,23 @@ public class ShireConfi {
 //        filterMap.put("/index", "authc");
 //        filterMap.put("/", "anon");  //anon  匿名可以访问
 //        filterMap.put("/**", "authc");  //登录用户可以访问
-
+        filterMap.put("/**", "user");  //可以从用户浏览器cookie获得用户信息
         //点击退出后 自动跳的界面
-        filterMap.put("/logout", "logout");
+
         //登录页面不拦截
-        filterMap.put("/modules/pages/login.html","anon");
+        filterMap.put("/modules/pages/login.html", "anon");
         //登录请求不拦截
-        filterMap.put("/*","anon");
+        filterMap.put("/**", "anon");
         //登录请求不拦截
-        filterMap.put("/user/login","anon");
+        filterMap.put("/user/doLogin", "anon");
+
+        filterMap.put("/doLogout", "anon");
         //主页面请求不拦截
         //静态资源不拦截
-        filterMap.put("/static/**","anon");
-        //其他请求页面全部拦截
-        filterMap.put("/*","anon");
+        filterMap.put("/static/**", "anon");
+
+//        //其他请求页面全部拦截
+//        filterMap.put("/*","anon");
         filter.setLoginUrl("login.html");
         //如果没有权限则调到
         filter.setUnauthorizedUrl("/tolessparmis");

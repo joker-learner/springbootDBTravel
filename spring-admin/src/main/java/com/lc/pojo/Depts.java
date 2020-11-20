@@ -2,10 +2,13 @@ package com.lc.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Depts {
+public class Depts implements Serializable {
+
+    private static final long serialVersionUID = 4870217342673391059L;
 
     private Long id;
 

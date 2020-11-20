@@ -15,7 +15,7 @@ public interface UserDao {
     //跟据usernmae 找权限名
     Set<String> findPermissionByName(String name);
 
-    SysUsersDeptVo findByName(String name);
+    SysUser findByName(String name);
 
     int findRowCount(@Param("username") String username);
 
@@ -36,4 +36,5 @@ public interface UserDao {
                   @Param("valid")Integer valid,
                   @Param("modifiedUser")String modifiedUser);
 
+    int updatePwd(String newPwdSec,String newSalt ,Long id);
 }

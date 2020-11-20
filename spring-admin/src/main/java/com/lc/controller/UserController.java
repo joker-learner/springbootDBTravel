@@ -22,8 +22,8 @@ public class UserController {
 
     @RequestMapping("/doLogin")
     @ResponseBody
-    public JsonResult loginCheck(String username, String password, String isRememberMe) {
-        userServiceimple.login(username, password);
+    public JsonResult loginCheck(String username, String password, boolean isRememberMe) {
+        userServiceimple.login(username, password,isRememberMe);
         return new JsonResult(1, "登陆成功。。", null);
     }
 

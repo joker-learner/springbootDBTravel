@@ -1,13 +1,21 @@
 package com.lc.controller;
 
+import com.lc.pojo.SysUser;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
     //直接去主页
     @RequestMapping("/doIndexUI")
-    public String toIndex() {
+    public String toIndex(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        SysUser principal = (SysUser)subject.getPrincipal();
+        String username = principal.getUsername();
+        model.addAttribute("username",username);
         return "/modules/pages/starter";
     }
 
@@ -71,6 +79,11 @@ public class PageController {
     @RequestMapping("/user/pwd_edit")
     public String toPassEdit(){
         return "/modules/pages/sys/pwd_edit";
+    }
+
+    @RequestMapping("/doLogout")
+    public String toLogout(){
+        return "/modules/pages/login";
     }
 }
 

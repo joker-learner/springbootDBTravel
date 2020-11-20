@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UserService {
     //登录验证
-    void login(String username, String pass);
+    void login(String username, String pass ,boolean isRememberMe);
     //注册
     PageObject<SysUsersDeptVo> findPageObject(String username, Integer pageCurrent);
 

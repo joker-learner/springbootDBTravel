@@ -34,6 +34,12 @@
             modifiedTime=now()
        where id=#{id}
     </update>
+    <update id="updatePwd">
+        update sys_users
+        set password = #{newPwdSec},
+            salt = #{newSalt}
+        where id = #{id}
+    </update>
 
     <select id="findRoleByName" resultSets="Set" resultType="String">
         SELECT t3.name from sys_users as t1
@@ -57,7 +63,7 @@
         WHERE t1.username = #{username};
     </select>
 
-    <select id="findByName" resultType="com.lc.pojo.SysUsersDeptVo">
+    <select id="findByName" resultType="com.lc.pojo.SysUser">
         select * from sys_users
         where username = #{username}
     </select>

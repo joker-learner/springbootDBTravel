@@ -1,7 +1,5 @@
 package com.lc.service.serviceImpl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.lc.mapper.RoleUserDao;
 import com.lc.mapper.UserDao;
 import com.lc.pojo.PageObject;
@@ -11,6 +9,7 @@ import com.lc.service.UserService;
 import com.lc.utils.ServiceException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +33,14 @@ public class UserServiceimple implements UserService {
 //    @Autowired
 
     @Override
-    public void login(String username, String pass) {
+    public void login(String username, String pass, boolean isRememberMe) {
         Subject subject = SecurityUtils.getSubject();
 //        SecurityUtils.setSecurityManager();
         UsernamePasswordToken token = new UsernamePasswordToken(username, pass);
+        if (isRememberMe) {
+            token.setRememberMe(true);
+        }
+
         try {
             subject.login(token);
             System.out.println("登录成功。。");
@@ -160,6 +163,7 @@ public class UserServiceimple implements UserService {
         return rows;
     }
 
+    @RequiresPermissions("sys:user:update")
     @Override
     public int validById(Integer id, Integer valid) {
         if (id == null || id <= 0)
@@ -181,7 +185,18 @@ public class UserServiceimple implements UserService {
     @Override
     public int upudatePwd(String pwd, String newPwd, String cfgPwd) {
         //1、先判断改密码与数据库中密码相同不（md5+salt 加密后与数据库密码对比）
-        //2、对输入的密码
-        return 0;
+        Subject subject = SecurityUtils.getSubject();
+        SysUser principal = (SysUser) subject.getPrincipal();
+        String oldPawd = principal.getPassword();
+        String oldSalt = principal.getSalt();
+        Integer id = principal.getId();
+        SimpleHash simpleHash = new SimpleHash("md5", pwd, oldSalt);
+        if(oldPawd.equals(simpleHash.toHex())){   //与密码验证成功
+            String newPwdSec = simpleHash.toHex();
+            String newSalt = UUID.randomUUID().toString();
+           int i = userDao.updatePwd(newPwdSec, newSalt , Long.valueOf(id));
+        }
+
+        return 1;
     }
 }

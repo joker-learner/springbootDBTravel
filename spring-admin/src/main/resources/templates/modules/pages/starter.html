@@ -3,7 +3,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html>
+<html lang="en"  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -181,7 +181,9 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs" id="loginUserId">username</span>
+<!--              <span class="hidden-xs" id="loginUserId">username</span>-->
+<!--              <span class="hidden-xs" id="loginUserId">[<shiro:principal/>]</span>-->
+              <span class="hidden-xs" id="loginUserId">[[${username}]]</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -212,6 +214,14 @@ desired effect
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+<!--                  <a href="doLogout" class="btn btn-default btn-sign-out">Sign out</a>-->
+                      您的身份是 <shiro:hasRole name="超级管理员">超级管理员</shiro:hasRole>
+                               <shiro:hasRole name="初级软件工程师">初级软件工程师</shiro:hasRole>
+                               <shiro:hasRole name="中级软件工程师">中级软件工程师</shiro:hasRole>
+                               <shiro:hasRole name="高级工程师">高级工程师</shiro:hasRole>
+
                 </div>
                 <div class="pull-right">
                   <a href="doLogout" class="btn btn-default btn-sign-out">Sign out</a>
@@ -256,13 +266,15 @@ desired effect
          <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
          </span>
-        </a>       
-        <ul class="treeview-menu">
-            <li><a id="load-base-id">基本管理</a></li>
-            <li><a id="load-type-id">类目管理</a></li>
-            <li><a id="load-brand-id">品牌管理</a></li>
-            <li><a id="load-attr-id">属性管理</a></li>
-        </ul>
+        </a>
+          <shiro:user>
+            <ul class="treeview-menu">
+                <li><a id="load-base-id">基本管理</a></li>
+                <li><a id="load-type-id">类目管理</a></li>
+                <li><a id="load-brand-id">品牌管理</a></li>
+                <li><a id="load-attr-id">属性管理</a></li>
+            </ul>
+          </shiro:user>
         </li> 
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> 
@@ -272,13 +284,41 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
+            <shiro:hasRole name="初级软件工程师">
             <li><a id="load-dept-id">部门管理</a></li>
-            <li><a id="load-menu-id">菜单管理</a></li>
-            <li><a id="load-role-id">角色管理</a></li>
-            <li><a id="load-user-id">用户管理</a></li>
-            <li><a id="load-log-id"> 日志管理</a></li>
-            <li><a id="load-pwd-id"> 修改密码</a></li>
+            </shiro:hasRole>
+<!--            <li><a id="load-menu-id">菜单管理</a></li>-->
+<!--            <li><a id="load-role-id">角色管理</a></li>-->
+<!--            <li><a id="load-user-id">用户管理</a></li>-->
+<!--            <li><a id="load-log-id"> 日志管理</a></li>-->
+<!--            <li><a id="load-pwd-id"> 修改密码</a></li>-->
+          <shiro:hasRole name="中级软件工程师">
+             <li><a id="load-dept-id">部门管理</a></li>
+             <li><a id="load-menu-id">菜单管理</a></li>
+          </shiro:hasRole>
+            <shiro:hasRole name="高级工程师">
+              <li><a id="load-dept-id">部门管理</a></li>
+              <li><a id="load-menu-id">菜单管理</a></li>
+              <li><a id="load-log-id"> 日志管理</a></li>
+            </shiro:hasRole>
+
+            <shiro:hasRole name="超级管理员">
+              <li><a id="load-dept-id">部门管理</a></li>
+              <li><a id="load-menu-id">菜单管理</a></li>
+              <li><a id="load-role-id">角色管理</a></li>
+              <li><a id="load-user-id">用户管理</a></li>
+              <li><a id="load-log-id"> 日志管理</a></li>
+              <li><a id="load-pwd-id"> 修改密码</a></li>
+            </shiro:hasRole>
           </ul>
+<!--          <ul class="treeview-menu">-->
+<!--            <li><a id="load-dept-id">部门管理</a></li>-->
+<!--            <li><a id="load-menu-id">菜单管理</a></li>-->
+<!--            <li><a id="load-role-id">角色管理</a></li>-->
+<!--            <li><a id="load-user-id">用户管理</a></li>-->
+<!--            <li><a id="load-log-id"> 日志管理</a></li>-->
+<!--            <li><a id="load-pwd-id"> 修改密码</a></li>-->
+<!--          </ul>-->
         </li>
       </ul>
       <!-- /.sidebar-menu -->

@@ -1,9 +1,11 @@
 package com.lc.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SysUser {
+public class SysUser implements Serializable {
 
+    private static final long serialVersionUID = -5388816814533555144L;
     private Integer id;
 
     private String username;
