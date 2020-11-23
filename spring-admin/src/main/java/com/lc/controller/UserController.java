@@ -7,6 +7,7 @@ import com.lc.pojo.SysUsersDeptVo;
 import com.lc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,11 +24,18 @@ public class UserController {
     @RequestMapping("/doLogin")
     @ResponseBody
     public JsonResult loginCheck(String username, String password, boolean isRememberMe) {
-        userServiceimple.login(username, password,isRememberMe);
+        userServiceimple.login(username, password, isRememberMe);
         return new JsonResult(1, "登陆成功。。", null);
     }
 
     //查
+//    @RequestMapping("/doFindPageObjects")
+//    @ResponseBody     //PageObjects   包含数据 和 分页信息
+//    public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
+//        PageObject<SysUsersDeptVo> pageObject = userServiceimple
+//                .findPageObject(username, pageCurrent);
+//        return new JsonResult(pageObject);
+//    }
     @RequestMapping("/doFindPageObjects")
     @ResponseBody     //PageObjects   包含数据 和 分页信息
     public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
@@ -69,7 +77,7 @@ public class UserController {
 
     @RequestMapping("/doUpdatePassword")
     @ResponseBody
-    public JsonResult doUpdatePassword(String pwd, String newPwd, String cfgPwd){
+    public JsonResult doUpdatePassword(String pwd, String newPwd, String cfgPwd) {
         int i = userServiceimple.upudatePwd(pwd, newPwd, cfgPwd);
         return new JsonResult("更新密码成功");
     }

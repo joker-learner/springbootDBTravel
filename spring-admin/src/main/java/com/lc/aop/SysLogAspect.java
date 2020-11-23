@@ -31,11 +31,11 @@ public class SysLogAspect {
     private LogService logServiceImpl;
 
     @Pointcut("@annotation(com.lc.common.annotation.RequiredLog)")
-    //@RequiredLog注解加在哪个方法上就标志改方法是切点方法，即被增强
+    //@RequiredLog注解加在哪个方法上就标该方法是切点方法，即被增强
     public void logPointCut() {   //用来承载切点
     }
 
-    @Around("logPointCut()")
+    @Around("logPointCut()")// 用around()增强被@RequiredLog标记的方法
     public Object around(ProceedingJoinPoint //切点方法的代理方法
                                  jointPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
