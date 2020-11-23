@@ -181,21 +181,13 @@ function doDeleteObject(){
 		  alert(result.message);
 	  }
   })
-	// $.post(url,function(result){
-	// 	if(result.state==1){
-	// 		alert(result.message);
-	// 		$("tbody input[type='radio']:checked")
-	// 				.parents("tr").remove();
-	// 	}else{
-	// 		alert(result.message);
-	// 	}
-	// })
 }
 
 function doGetObjects(){
 	//移除mainContentId位置的数据
 	$("#mainContentId").removeData();
-	var treeTable=new TreeTable(
+
+	var treeTable = new TreeTable(
 				"menuTable",		 //tableId
 				"/menu/findObjects",   //url
 				 columns);           //表中列的配置

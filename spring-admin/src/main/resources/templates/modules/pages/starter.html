@@ -254,8 +254,6 @@ desired effect
         </div>
       </div>
       -->
-
-
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
@@ -342,9 +340,6 @@ desired effect
     </section>
     <!-- Main content -->
     <section id="mainContentId" class="content container-fluid">
-<!--      <iframe name="mainContent" width="780px" height="auto">-->
-
-<!--      </iframe>-->
 
      
     </section>
@@ -359,7 +354,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020 <a href="#">Company</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -432,9 +427,6 @@ desired effect
       <!-- /.tab-pane -->
     </div>
   </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- Modal -->
@@ -474,12 +466,13 @@ desired effect
       
       function doLoadUI(id,url){
     	  $("#"+id).click(function(){//事件处理函数
-    		  console.log("====");
+    		  console.log("=========");
     		  //load函数为一个jquery中的ajax函数,其作用是将url对应的资源，异步加载到指定位置
     		  //此处表示在mainContentId对应的对象位置异步加载url指定资源
     		  $("#mainContentId").load(url); 
     	  }) 
       }
+
 
 </script>
 </body>

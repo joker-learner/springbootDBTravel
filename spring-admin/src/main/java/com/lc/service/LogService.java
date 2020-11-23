@@ -10,4 +10,5 @@ public interface LogService {
     int deletLogByIds(Integer... ids);
 
     void saveObject(LogEntity entity);
+
 }

@@ -1,5 +1,6 @@
 package com.lc.service.serviceImpl;
 
+import com.lc.common.annotation.RequiredLog;
 import com.lc.mapper.RoleUserDao;
 import com.lc.mapper.UserDao;
 import com.lc.pojo.PageObject;
@@ -49,7 +50,7 @@ public class UserServiceimple implements UserService {
             throw new ServiceException("登录失败，密码或账号错误");
         }
     }
-
+    @RequiredLog(operation = "分页查询用户信息")
     @Override
     public PageObject<SysUsersDeptVo> findPageObject(String username, Integer pageCurrent) {
         if (pageCurrent == null || pageCurrent < 1) {
@@ -162,7 +163,7 @@ public class UserServiceimple implements UserService {
         //4.返回结果
         return rows;
     }
-
+    @RequiredLog(operation = "禁用启用")//此注解描述的方法为日志切入点方法
     @RequiresPermissions("sys:user:update")
     @Override
     public int validById(Integer id, Integer valid) {

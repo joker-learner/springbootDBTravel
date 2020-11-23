@@ -1,7 +1,5 @@
 package com.lc.controller;
 
-import com.lc.mapper.RoleMenuDao;
-import com.lc.mapper.RoleUserDao;
 import com.lc.pojo.JsonResult;
 import com.lc.pojo.PageObject;
 import com.lc.pojo.Rolers;
@@ -19,12 +17,13 @@ public class RolersController {
     @Autowired
     private RolesService rolesService;
 
-    @RequestMapping("/doFindPageObjects")
-    @ResponseBody
-    public JsonResult findPageObject(String name, Integer pageCurrent) {
-        PageObject<Rolers> pageObj = rolesService.findPageObj(name, pageCurrent);
-        return new JsonResult(pageObj);
-    }
+
+@RequestMapping("/doFindPageObjects")
+@ResponseBody
+public JsonResult findPageObject(String name, Integer pageCurrent) {
+    PageObject<Rolers> pageObj = rolesService.findPageObj(name, pageCurrent);
+    return new JsonResult(pageObj);
+}
 
     @RequestMapping("/doDeleteObject")
     @ResponseBody

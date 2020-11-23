@@ -5,11 +5,12 @@
 <mapper namespace="com.lc.mapper.LogServiceDao">
     <cache/>
     <insert id="insertObject">
-        insert into sys_logs
-       (username,operation,method,params,time,ip,createdTime)
-       values
-(#{username},#{operation},#{method},#{params},#{time},#{ip},#{createdTime})
+          insert into sys_logs
+          (username,ip,operation,method,params,time,createdTime)
+          values
+          (#{username},#{ip},#{operation},#{method},#{params},#{time},#{createdTime})
     </insert>
+
     <delete id="deleteLogByIds" parameterType="List">
         delete from sys_logs
         where id in
